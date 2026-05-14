@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>For You, On Your Day 🌿</title>
+<style>
+  :root {
+    --matcha-deep: #4a6741;
+    --matcha: #7ca982;
+    --matcha-light: #b8d4ba;
+    --foam: #ecf3e7;
+    --wood: #6d4c3d;
+    --wood-dark: #3a261d;
+    --wood-light: #8a6750;
+    --cream: #f5ede0;
+    --warm: #ffd89b;
+    --night: #2a3a4a;
+    --night-deep: #1a2530;
+    --wall: #3d2a22;
+    --wall-light: #5a3d30;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--night-deep);
+    color: var(--cream);
+  }
+
+  .scene {
+    position: relative;
+    width: 100vw; height: 100vh;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255, 200, 130, 0.15) 0%, transparent 50%),
+      linear-gradient(180deg, var(--wall) 0%, var(--wall-light) 70%, var(--wood-dark) 100%);
+    overflow: hidden;
+  }
+
+  /* warm cafe lamp glow at top */
+  .lamp-glow {
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(255, 210, 150, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+    animation: flicker 6s ease-in-out infinite;
+  }
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+  }
+
+  /* Window frame */
+  .window {
+    position: absolute;
+    top: 9%; left: 50%;
+    transform: translateX(-50%);
+    width: min(78vw, 700px);
+    height: 58vh;
+    border: 14px solid var(--wood-dark);
+    border-radius: 4px;
+    background: linear-gradient(180deg, #2a3a4a 0%, #3a4e62 50%, #4a5e75 100%);
+    box-shadow:
+      inset 0 0 100px rgba(0,0,0,0.5),
+      inset 0 0 30px rgba(120, 150, 180, 0.1),
+      0 25px 60px rgba(0,0,0,0.6),
+      0 0 0 6px var(--wood-light);
+    overflow: hidden;
+  }
+
+  /* window cross mullion */
+  .window::before, .window::after {
+    content: '';
+    position: absolute;
+    background: var(--wood-dark);
+    z-index: 4;
+  }
+  .window::before {
+    top: 0; bottom: 0; left: 50%;
+    width: 8px; transform: translateX(-50%);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+  }
+  .window::after {
+    left: 0; right: 0; top: 50%;
+    height: 8px; transform: translateY(-50%);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+  }
+
+  /* Outside city silhouette (soft Swedish street) */
+  .outside {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .skyline {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 45%;
+    background: var(--night-deep);
+    clip-path: polygon(
+      0 100%, 0 70%,
+      6% 70%, 6% 45%, 14% 45%, 14% 60%,
+      22% 60%, 22% 30%, 32% 30%, 32% 55%,
+      40% 55%, 40% 40%, 50% 40%, 50% 25%,
+      60% 25%, 60% 50%, 70% 50%, 70% 35%,
+      80% 35%, 80% 60%, 90% 60%, 90% 50%,
+      100% 50%, 100% 100%
+    );
+    opacity: 0.85;
+  }
+  .windows-far {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 45%;
+    pointer-events: none;
+  }
+  .windows-far span {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: rgba(255, 200, 130, 0.7);
+    box-shadow: 0 0 6px rgba(255, 200, 130, 0.5);
+    border-radius: 1px;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Rain on glass */
+  .rain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .drop {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(220, 235, 255, 0.55));
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-120px); }
+    100% { transform: translateY(80vh); }
+  }
+
+  /* slow water streaks running down the glass */
+  .streak {
+    position: absolute;
+    width: 2px; height: 0;
+    background: linear-gradient(180deg, rgba(220,235,255,0.1), rgba(220,235,255,0.45));
+    border-radius: 0 0 50% 50%;
+    filter: blur(0.6px);
+    animation: streak linear infinite;
+  }
+  @keyframes streak {
+    0% { transform: translateY(0); height: 0; opacity: 0; }
+    15% { opacity: 0.8; }
+    100% { transform: translateY(60vh); height: 60px; opacity: 0; }
+  }
+
+  /* glass condensation */
+  .glass-mist {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Table */
+  .table {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 22%;
+    background:
+      linear-gradient(180deg, var(--wood-light) 0%, var(--wood) 30%, var(--wood-dark) 100%);
+    box-shadow:
+      inset 0 4px 0 rgba(0,0,0,0.3),
+      inset 0 -20px 30px rgba(0,0,0,0.4);
+    z-index: 5;
+  }
+  .table::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: rgba(255, 230, 200, 0.15);
+  }
+
+  /* Matcha cup */
+  .cup {
+    position: absolute;
+    bottom: 14%; left: 8%;
+    width: 130px; height: 110px;
+    z-index: 6;
+  }
+  .saucer {
+    position: absolute;
+    bottom: -8px; left: -15px;
+    width: 145px; height: 18px;
+    background: linear-gradient(180deg, #f5ede0 0%, #c8b890 100%);
+    border-radius: 50%;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  }
+  .cup-body {
+    position: absolute;
+    bottom: 4px; left: 0;
+    width: 110px; height: 95px;
+    background: linear-gradient(180deg, #f5ede0 0%, #d8c8a8 60%, #a89070 100%);
+    border-radius: 8px 8px 50px 50px;
+    box-shadow:
+      inset -12px 0 24px rgba(0,0,0,0.18),
+      inset 12px 0 24px rgba(255,255,255,0.1),
+      0 8px 24px rgba(0,0,0,0.5);
+  }
+  .cup-handle {
+    position: absolute;
+    right: -2px; bottom: 30px;
+    width: 30px; height: 42px;
+    border: 8px solid #d8c8a8;
+    border-left: none;
+    border-radius: 0 30px 30px 0;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  }
+  .matcha {
+    position: absolute;
+    top: 8px; left: 8px;
+    width: 94px; height: 18px;
+    background: radial-gradient(ellipse at 40% 40%, var(--matcha) 0%, var(--matcha-deep) 90%);
+    border-radius: 50%;
+    box-shadow: inset 0 -3px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.15);
+  }
+  .matcha::before {
+    content: '';
+    position: absolute;
+    top: 3px; left: 18px;
+    width: 50px; height: 8px;
+    background: radial-gradient(ellipse, var(--foam) 0%, transparent 70%);
+    opacity: 0.5;
+    border-radius: 50%;
+  }
+  /* heart latte art on the matcha */
+  .latte-heart {
+    position: absolute;
+    top: 4px; left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    width: 10px; height: 10px;
+    background: var(--foam);
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  }
+  .latte-heart::before, .latte-heart::after {
+    content: '';
+    position: absolute;
+    width: 10px; height: 10px;
+    background: var(--foam);
+    border-radius: 50%;
+  }
+  .latte-heart::before { top: -5px; left: 0; }
+  .latte-heart::after { top: 0; left: -5px; }
+
+  /* Steam */
+  .steam {
+    position: absolute;
+    bottom: 100px; left: 25px;
+    width: 70px; height: 100px;
+    pointer-events: none;
+  }
+  .steam span {
+    position: absolute;
+    bottom: 0;
+    width: 10px; height: 10px;
+    background: rgba(255,255,255,0.55);
+    border-radius: 50%;
+    filter: blur(5px);
+    animation: rise 3.5s ease-out infinite;
+  }
+  .steam span:nth-child(1) { left: 10px; animation-delay: 0s; }
+  .steam span:nth-child(2) { left: 28px; animation-delay: 0.9s; }
+  .steam span:nth-child(3) { left: 46px; animation-delay: 1.7s; }
+  .steam span:nth-child(4) { left: 20px; animation-delay: 2.4s; }
+  @keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    20% { opacity: 0.6; }
+    100% { transform: translateY(-90px) translateX(15px) scale(2.8); opacity: 0; }
+  }
+
+  /* Bali postcard pinned to the wall */
+  .postcard {
+    position: absolute;
+    bottom: 28%; right: 6%;
+    width: 170px; height: 115px;
+    background:
+      linear-gradient(135deg, #ffd89b 0%, #ff9472 40%, #5dadec 100%);
+    border-radius: 4px;
+    transform: rotate(7deg);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.55),
+      inset 0 0 20px rgba(255,255,255,0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(.34,1.56,.64,1);
+    z-index: 7;
+  }
+  .postcard:hover { transform: rotate(0deg) scale(1.08); }
+  .postcard .palm {
+    position: absolute;
+    bottom: 0; left: 8px;
+    font-size: 56px; line-height: 1;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  }
+  .postcard .palm-2 {
+    position: absolute;
+    bottom: -5px; right: 30px;
+    font-size: 40px; line-height: 1;
+    opacity: 0.7;
+  }
+  .postcard .label {
+    position: absolute;
+    top: 10px; right: 14px;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 4px;
+    font-size: 14px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .postcard .stamp {
+    position: absolute;
+    top: 8px; left: 10px;
+    width: 22px; height: 28px;
+    background: rgba(255,255,255,0.85);
+    border: 1.5px dashed rgba(0,0,0,0.2);
+    font-size: 14px;
+    text-align: center;
+    line-height: 28px;
+  }
+  .pin {
+    position: absolute;
+    top: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 13px; height: 13px;
+    background: radial-gradient(circle at 30% 30%, #ff8585, #b91c1c);
+    border-radius: 50%;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.5);
+    z-index: 8;
+  }
+
+  /* Birthday message */
+  .message {
+    position: absolute;
+    top: 3.5%; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .message h1 {
+    font-size: clamp(1.7rem, 3.6vw, 2.8rem);
+    font-weight: normal;
+    letter-spacing: 0.04em;
+    color: var(--matcha-light);
+    margin-bottom: 0.2em;
+    text-shadow: 0 0 20px rgba(184, 212, 186, 0.4), 0 2px 8px rgba(0,0,0,0.7);
+    animation: glow 5s ease-in-out infinite;
+  }
+  .message .name {
+    color: var(--warm);
+    font-style: italic;
+  }
+  .message p {
+    font-size: 0.85rem;
+    opacity: 0.65;
+    letter-spacing: 0.25em;
+    color: var(--cream);
+    text-transform: lowercase;
+  }
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(184, 212, 186, 0.3), 0 2px 8px rgba(0,0,0,0.7); }
+    50%      { text-shadow: 0 0 35px rgba(184, 212, 186, 0.7), 0 2px 8px rgba(0,0,0,0.7); }
+  }
+
+  /* Feminist quote */
+  .quote {
+    position: absolute;
+    bottom: 2.5%; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--cream);
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+    opacity: 0.7;
+    max-width: 85%;
+    letter-spacing: 0.05em;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .quote::before, .quote::after {
+    content: '—';
+    margin: 0 0.8em;
+    opacity: 0.5;
+  }
+
+  /* Wish button */
+  .wish-btn {
+    position: absolute;
+    bottom: 9%; left: 50%;
+    transform: translateX(-50%);
+    padding: 13px 32px;
+    background: rgba(124, 169, 130, 0.18);
+    border: 1px solid var(--matcha-light);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 20;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    text-transform: lowercase;
+  }
+  .wish-btn:hover {
+    background: rgba(124, 169, 130, 0.4);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 5px 20px rgba(124, 169, 130, 0.3);
+  }
+  .wish-btn:active { transform: translateX(-50%) translateY(0); }
+
+  /* Floating leaves on wish */
+  .leaf {
+    position: fixed;
+    bottom: -30px;
+    pointer-events: none;
+    z-index: 30;
+    animation: floatLeaf linear forwards;
+  }
+  @keyframes floatLeaf {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    15%  { opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Wish reveal modal */
+  .reveal {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 37, 48, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s;
+    backdrop-filter: blur(10px);
+  }
+  .reveal.show { opacity: 1; pointer-events: auto; }
+  .reveal-content { max-width: 620px; }
+  .reveal h2 {
+    color: var(--matcha-light);
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    margin-bottom: 1.5rem;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+  }
+  .reveal p {
+    line-height: 2;
+    font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .reveal .signoff {
+    color: var(--warm);
+    font-style: italic;
+    margin-top: 2rem;
+    letter-spacing: 0.1em;
+  }
+  .reveal .close {
+    margin-top: 2rem;
+    background: none;
+    border: 1px solid var(--matcha-light);
+    color: var(--cream);
+    padding: 9px 24px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+  .reveal .close:hover { background: rgba(184, 212, 186, 0.15); }
+  .wish-counter {
+    color: var(--matcha-light);
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .wish-nav {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .wish-nav .close { margin-top: 0; }
+  #wishBody p {
+    animation: fadeUp 0.6s ease-out both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Tiny corner accent: SE → ID */
+  .accent {
+    position: absolute;
+    top: 14px; right: 18px;
+    font-size: 0.7rem;
+    color: rgba(245, 237, 224, 0.4);
+    letter-spacing: 0.25em;
+    z-index: 10;
+  }
+
+  /* fairy lights string across the top of the window */
+  .fairy-lights {
+    position: absolute;
+    top: 8.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(82vw, 740px);
+    height: 60px;
+    z-index: 9;
+    pointer-events: none;
+  }
+  .fairy-string {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+  }
+  .bulb {
+    position: absolute;
+    top: 0;
+    width: 9px; height: 13px;
+    border-radius: 50% 50% 45% 45%;
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+    animation: bulbBlink 4s ease-in-out infinite;
+  }
+  .bulb::before {
+    content: '';
+    position: absolute;
+    top: -3px; left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 3px;
+    background: #555;
+    border-radius: 1px;
+  }
+  @keyframes bulbBlink {
+    0%, 100% { opacity: 0.95; filter: brightness(1); }
+    50% { opacity: 0.7; filter: brightness(0.85); }
+  }
+
+  /* cinnamon bun (kanelbulle) — fika reference */
+  .bun {
+    position: absolute;
+    bottom: 14%; left: 22%;
+    width: 75px; height: 60px;
+    z-index: 6;
+  }
+  .plate {
+    position: absolute;
+    bottom: 0; left: -10px;
+    width: 95px; height: 14px;
+    background: radial-gradient(ellipse at 50% 30%, #e8dcc4 0%, #b8a584 100%);
+    border-radius: 50%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+  }
+  .bun-body {
+    position: absolute;
+    bottom: 8px; left: 5px;
+    width: 65px; height: 42px;
+    background: radial-gradient(ellipse at 40% 30%, #c89070 0%, #8a5a3a 70%, #5a3820 100%);
+    border-radius: 50%;
+    box-shadow:
+      inset -8px -6px 14px rgba(0,0,0,0.3),
+      inset 6px 4px 10px rgba(255,200,150,0.2),
+      0 4px 8px rgba(0,0,0,0.4);
+  }
+  /* swirl on the bun */
+  .bun-swirl {
+    position: absolute;
+    top: 8px; left: 12px;
+    width: 40px; height: 26px;
+    border: 2px solid rgba(60,30,15,0.5);
+    border-radius: 50%;
+    border-right-color: transparent;
+    transform: rotate(20deg);
+  }
+  .bun-swirl::after {
+    content: '';
+    position: absolute;
+    top: 5px; left: 7px;
+    width: 22px; height: 14px;
+    border: 2px solid rgba(60,30,15,0.4);
+    border-radius: 50%;
+    border-right-color: transparent;
+  }
+  /* sugar pearls */
+  .sugar {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(255,255,255,0.8);
+  }
+
+  /* Tiny potted plant */
+  .plant {
+    position: absolute;
+    bottom: 14%; right: 22%;
+    width: 60px; height: 70px;
+    z-index: 6;
+  }
+  .pot {
+    position: absolute;
+    bottom: 0; left: 8px;
+    width: 44px; height: 30px;
+    background: linear-gradient(180deg, #c8927a 0%, #8a5a3e 100%);
+    clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+  }
+  .pot::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(0,0,0,0.25);
+  }
+  .leaves {
+    position: absolute;
+    bottom: 22px; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 55px;
+  }
+  .leaves span {
+    position: absolute;
+    width: 12px; height: 22px;
+    background: linear-gradient(180deg, #8db97a 0%, #4a6741 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform-origin: bottom center;
+    box-shadow: inset -2px 0 3px rgba(0,0,0,0.2);
+    animation: sway 4s ease-in-out infinite;
+  }
+  .leaves span:nth-child(1) { left: 28px; bottom: 0; transform: rotate(0deg); }
+  .leaves span:nth-child(2) { left: 16px; bottom: 6px; transform: rotate(-30deg); animation-delay: 0.4s; }
+  .leaves span:nth-child(3) { left: 40px; bottom: 6px; transform: rotate(30deg); animation-delay: 0.8s; }
+  .leaves span:nth-child(4) { left: 6px; bottom: 16px; transform: rotate(-55deg); animation-delay: 1.2s; }
+  .leaves span:nth-child(5) { left: 50px; bottom: 16px; transform: rotate(55deg); animation-delay: 1.6s; }
+  .leaves span:nth-child(6) { left: 28px; bottom: 22px; transform: rotate(0deg); width: 10px; height: 18px; animation-delay: 0.6s; }
+  @keyframes sway {
+    0%, 100% { transform: rotate(var(--r, 0deg)) translateX(0); }
+    50% { transform: rotate(calc(var(--r, 0deg) + 4deg)) translateX(1px); }
+  }
+
+  /* open book */
+  .book {
+    position: absolute;
+    bottom: 14.5%; right: 8%;
+    width: 90px; height: 25px;
+    z-index: 6;
+    transform: perspective(120px) rotateX(50deg);
+    transform-origin: bottom center;
+  }
+  .book-page {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #faf3e3 0%, #e8dcc0 100%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    border-radius: 1px;
+  }
+  .book-page::before, .book-page::after {
+    content: '';
+    position: absolute;
+    left: 8px; right: 8px;
+    height: 1px;
+    background: rgba(80,50,30,0.3);
+  }
+  .book-page::before { top: 7px; right: 50%; margin-right: 3px; }
+  .book-page::after { top: 14px; right: 50%; margin-right: 3px; }
+  .book-spine {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 2px;
+    background: rgba(80,50,30,0.5);
+    transform: translateX(-50%);
+  }
+
+  /* ============ CAFE PERSON ============ */
+  .cafe-person {
+    position: absolute;
+    bottom: 17%;
+    left: 50%;
+    transform: translateX(-52%);
+    z-index: 8;
+    width: 240px;
+    height: 280px;
+    pointer-events: none;
+  }
+  .chair {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 200px;
+    background: linear-gradient(180deg, var(--wood) 0%, var(--wood-dark) 100%);
+    border-radius: 12px 12px 0 0;
+    box-shadow: inset -8px 0 16px rgba(0,0,0,0.4), inset 8px 0 12px rgba(255,255,255,0.05);
+    z-index: 1;
+  }
+  .chair::before {
+    content: '';
+    position: absolute;
+    top: 25px; left: 8%; right: 8%;
+    height: 5px;
+    background: rgba(0,0,0,0.45);
+    border-radius: 3px;
+  }
+  .chair::after {
+    content: '';
+    position: absolute;
+    top: 70px; left: 8%; right: 8%;
+    height: 5px;
+    background: rgba(0,0,0,0.35);
+    border-radius: 3px;
+  }
+  .hair-long {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 145px;
+    height: 200px;
+    background: linear-gradient(180deg, #15181f 0%, #0a0c10 100%);
+    border-radius: 55% 55% 30% 30% / 55% 55% 45% 45%;
+    z-index: 2;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  }
+  .hair-long::before {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 0; right: 0;
+    height: 30px;
+    background: linear-gradient(180deg, #0a0c10 0%, transparent 100%);
+    border-radius: 50% 50% 50% 50% / 100% 100% 0 0;
+  }
+  .body-sil {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 165px;
+    height: 110px;
+    background: linear-gradient(180deg, #1c2028 0%, #0e1117 100%);
+    border-radius: 80px 80px 10px 10px;
+    z-index: 3;
+  }
+  .head-sil {
+    position: absolute;
+    bottom: 95px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75px;
+    height: 85px;
+    background: #15181f;
+    border-radius: 50% 50% 45% 45%;
+    z-index: 3;
+  }
+  /* warm rim light from cafe lamp */
+  .head-sil::before {
+    content: '';
+    position: absolute;
+    top: 0; right: -2px;
+    width: 12px; height: 60px;
+    background: linear-gradient(180deg, transparent, rgba(255, 200, 130, 0.18), transparent);
+    border-radius: 50%;
+    filter: blur(2px);
+  }
+  /* earbud cord */
+  .earbud {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(40px);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .earbud-cord {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1.5px;
+    height: 70px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
+    transform: rotate(8deg);
+    transform-origin: top center;
+  }
+  .arm-up {
+    position: absolute;
+    bottom: 30px;
+    right: 12px;
+    width: 60px;
+    height: 130px;
+    z-index: 5;
+  }
+  .arm-shape {
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    width: 45px;
+    height: 110px;
+    background: linear-gradient(180deg, #1c2028 0%, #0e1117 100%);
+    border-radius: 30px 30px 25px 25px;
+    transform: rotate(-12deg);
+    transform-origin: bottom center;
+  }
+  .phone {
+    position: absolute;
+    top: -8px;
+    right: -22px;
+    width: 70px;
+    height: 120px;
+    background: #0a0a0f;
+    border-radius: 11px;
+    border: 2px solid #1a1a1f;
+    box-shadow:
+      0 0 35px rgba(170, 210, 255, 0.45),
+      0 0 70px rgba(170, 210, 255, 0.18),
+      0 5px 20px rgba(0,0,0,0.6);
+    transform: rotate(-14deg);
+    overflow: hidden;
+    z-index: 6;
+  }
+  .phone-notch {
+    position: absolute;
+    top: 4px; left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 3px;
+    background: #1a1a1f;
+    border-radius: 2px;
+    z-index: 10;
+  }
+  .phone-screen {
+    position: absolute;
+    inset: 4px;
+    border-radius: 7px;
+    background: #000;
+    overflow: hidden;
+  }
+  .tt-feed {
+    position: absolute;
+    inset: 0;
+    animation: ttScroll 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  .tt-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .tt-card:nth-child(1) {
+    top: 0;
+    background: linear-gradient(160deg, #1a1a2e 0%, #6d2a8c 60%, #b91c5c 100%);
+  }
+  .tt-card:nth-child(2) {
+    top: 100%;
+    background: linear-gradient(160deg, #4a6741 0%, #7ca982 100%);
+  }
+  .tt-card:nth-child(3) {
+    top: 200%;
+    background: linear-gradient(160deg, #ffd89b 0%, #ff9472 40%, #5dadec 100%);
+  }
+  @keyframes ttScroll {
+    0%, 28%   { transform: translateY(0); }
+    33%, 61%  { transform: translateY(-100%); }
+    66%, 94%  { transform: translateY(-200%); }
+    99%, 100% { transform: translateY(0); }
+  }
+  .tt-emoji {
+    font-size: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    animation: ttBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes ttBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  .tt-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .tt-song {
+    position: absolute;
+    bottom: 5px;
+    left: 4px;
+    right: 18px;
+    color: white;
+    font-size: 5px;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    font-family: -apple-system, sans-serif;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tt-user {
+    position: absolute;
+    bottom: 14px;
+    left: 4px;
+    color: white;
+    font-size: 5px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    font-family: -apple-system, sans-serif;
+  }
+  .tt-icons {
+    position: absolute;
+    right: 3px;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 7px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    z-index: 5;
+  }
+  .tt-icons span { line-height: 1; }
+  .tt-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 1px;
+    background: white;
+    width: 0;
+    animation: ttBar 4s linear infinite;
+  }
+  @keyframes ttBar {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+
+  /* music notes floating from phone */
+  .note {
+    position: absolute;
+    color: rgba(255, 200, 130, 0.7);
+    font-size: 14px;
+    pointer-events: none;
+    animation: floatNote 4s ease-out infinite;
+    text-shadow: 0 0 6px rgba(255, 200, 130, 0.5);
+  }
+  @keyframes floatNote {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.9; }
+    100% { transform: translate(40px, -80px) rotate(25deg); opacity: 0; }
+  }
+
+  /* MJ poster on the wall */
+  .mj-poster {
+    position: absolute;
+    bottom: 32%;
+    left: 5%;
+    width: 110px;
+    height: 145px;
+    background:
+      radial-gradient(ellipse at 50% 30%, #1f1a2e 0%, #0a0a14 100%);
+    border: 7px solid #1a0f08;
+    border-radius: 2px;
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.65),
+      inset 0 0 30px rgba(255,200,80,0.08),
+      0 0 0 2px rgba(60,40,20,0.5);
+    transform: rotate(-4deg);
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px;
+    overflow: hidden;
+  }
+  .mj-poster::before {
+    content: '✦';
+    position: absolute;
+    top: 8px; left: 8px;
+    color: rgba(255, 215, 0, 0.5);
+    font-size: 8px;
+  }
+  .mj-poster::after {
+    content: '✦';
+    position: absolute;
+    top: 8px; right: 8px;
+    color: rgba(255, 215, 0, 0.5);
+    font-size: 8px;
+  }
+  .mj-figure {
+    font-size: 56px;
+    line-height: 1;
+    filter:
+      drop-shadow(0 0 12px rgba(255, 215, 100, 0.4))
+      drop-shadow(0 2px 3px rgba(0,0,0,0.6));
+    animation: mjGlow 3s ease-in-out infinite;
+  }
+  @keyframes mjGlow {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(255, 215, 100, 0.4)) drop-shadow(0 2px 3px rgba(0,0,0,0.6)); }
+    50% { filter: drop-shadow(0 0 22px rgba(255, 215, 100, 0.7)) drop-shadow(0 2px 3px rgba(0,0,0,0.6)); }
+  }
+  .mj-title {
+    color: #ffd700;
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-top: 6px;
+    text-shadow: 0 0 6px rgba(255,215,0,0.5);
+  }
+  .mj-sub {
+    color: rgba(255, 215, 0, 0.7);
+    font-size: 6px;
+    letter-spacing: 3px;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+  .mj-pin {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 13px; height: 13px;
+    background: radial-gradient(circle at 30% 30%, #ffe585, #c9a51c);
+    border-radius: 50%;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.5);
+    z-index: 9;
+  }
+
+  /* hearts that float up on click */
+  .floating-heart {
+    position: fixed;
+    pointer-events: none;
+    z-index: 30;
+    font-size: 24px;
+    animation: floatHeart 2.5s ease-out forwards;
+  }
+  @keyframes floatHeart {
+    0% { transform: translateY(0) scale(0.5); opacity: 1; }
+    100% { transform: translateY(-150px) scale(1.3); opacity: 0; }
+  }
+
+  /* sparkle on the matcha */
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 6px white, 0 0 12px white;
+    animation: sparkle 3s ease-in-out infinite;
+  }
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ============ PASSWORD GATE ============ */
+  .gate {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(124, 169, 130, 0.15) 0%, transparent 60%),
+      linear-gradient(180deg, #1a2530 0%, #0a0e15 100%);
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+    padding: 2rem;
+    text-align: center;
+  }
+  .gate.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .gate-title {
+    color: var(--matcha-light);
+    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    font-weight: normal;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(184, 212, 186, 0.3);
+  }
+  .gate-sub {
+    color: var(--cream);
+    font-size: 0.85rem;
+    opacity: 0.6;
+    letter-spacing: 0.2em;
+    margin-bottom: 2.5rem;
+    text-transform: lowercase;
+  }
+  .gate-hint {
+    color: var(--warm);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+    max-width: 460px;
+    line-height: 1.6;
+  }
+  .gate-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(184, 212, 186, 0.4);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 1.05rem;
+    padding: 12px 22px;
+    border-radius: 30px;
+    width: min(320px, 80vw);
+    text-align: center;
+    letter-spacing: 0.08em;
+    outline: none;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+  }
+  .gate-input:focus {
+    border-color: var(--matcha-light);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 25px rgba(184, 212, 186, 0.25);
+  }
+  .gate-input::placeholder {
+    color: rgba(245, 237, 224, 0.35);
+    font-style: italic;
+  }
+  .gate-input.wrong {
+    border-color: #d97070;
+    animation: shake 0.5s;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+  }
+  .gate-btn {
+    margin-top: 1.2rem;
+    background: rgba(124, 169, 130, 0.18);
+    border: 1px solid var(--matcha-light);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    padding: 11px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    text-transform: lowercase;
+    transition: all 0.3s;
+  }
+  .gate-btn:hover {
+    background: rgba(124, 169, 130, 0.4);
+    transform: translateY(-2px);
+  }
+  .gate-error {
+    color: #ffb3b3;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    height: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    letter-spacing: 0.1em;
+  }
+  .gate-error.show { opacity: 0.85; }
+  .gate-decor {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+    letter-spacing: 0.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .window { width: 92vw; height: 50vh; }
+    .cup { left: 4%; bottom: 8%; transform: scale(0.78); transform-origin: bottom left; }
+    .postcard { right: 4%; bottom: 22%; transform: rotate(7deg) scale(0.85); }
+    .bun { display: none; }
+    .plant { right: 4%; transform: scale(0.8); }
+    .book { display: none; }
+    .fairy-lights { width: 92vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- password gate -->
+<div class="gate" id="gate">
+  <div class="gate-decor">🍵 ✨ 🌴</div>
+  <h2 class="gate-title">a small surprise awaits</h2>
+  <p class="gate-sub">for faisa · only you</p>
+  <p class="gate-hint">
+    type the name of mj's iconic 1983 hit<br>
+    <span style="opacity: 0.7; font-size: 0.85em;">(two words, the one with the bassline you can't unhear)</span>
+  </p>
+  <input
+    type="text"
+    class="gate-input"
+    id="gateInput"
+    placeholder="type here..."
+    autocomplete="off"
+    autocapitalize="off"
+    autocorrect="off"
+    spellcheck="false"
+  >
+  <button class="gate-btn" id="gateBtn">enter ✦</button>
+  <p class="gate-error" id="gateError">try again — listen closely</p>
+</div>
+
+<div class="scene">
+  <div class="lamp-glow"></div>
+  <div class="accent">🇸🇪 ↣ 🇮🇩</div>
+
+  <div class="message">
+    <h1>happy birthday, <span class="name">[NAME]</span></h1>
+    <p>may 15 · friday · twenty-three</p>
+  </div>
+
+  <div class="window">
+    <div class="outside">
+      <div class="skyline"></div>
+      <div class="windows-far" id="farLights"></div>
+    </div>
+    <div class="rain" id="rain"></div>
+    <div class="glass-mist"></div>
+  </div>
+
+  <div class="postcard" id="postcard">
+    <div class="pin"></div>
+    <div class="stamp">✈</div>
+    <div class="label">BALI</div>
+    <div class="palm">🌴</div>
+    <div class="palm-2">🌴</div>
+  </div>
+
+  <div class="cup">
+    <div class="steam"><span></span><span></span><span></span><span></span></div>
+    <div class="saucer"></div>
+    <div class="cup-body"></div>
+    <div class="cup-handle"></div>
+    <div class="matcha">
+      <div class="latte-heart"></div>
+    </div>
+  </div>
+
+  <!-- cinnamon bun on a plate -->
+  <div class="bun">
+    <div class="plate"></div>
+    <div class="bun-body">
+      <div class="bun-swirl"></div>
+      <div class="sugar" style="top: 4px; left: 18px;"></div>
+      <div class="sugar" style="top: 10px; left: 38px;"></div>
+      <div class="sugar" style="top: 22px; left: 12px;"></div>
+      <div class="sugar" style="top: 28px; left: 46px;"></div>
+      <div class="sugar" style="top: 18px; left: 28px;"></div>
+    </div>
+  </div>
+
+  <!-- tiny plant -->
+  <div class="plant">
+    <div class="leaves">
+      <span style="--r: 0deg"></span>
+      <span style="--r: -30deg"></span>
+      <span style="--r: 30deg"></span>
+      <span style="--r: -55deg"></span>
+      <span style="--r: 55deg"></span>
+      <span style="--r: 0deg"></span>
+    </div>
+    <div class="pot"></div>
+  </div>
+
+  <!-- open book -->
+  <div class="book">
+    <div class="book-page"></div>
+    <div class="book-spine"></div>
+  </div>
+
+  <!-- MJ "King of Pop" poster on the wall -->
+  <div class="mj-poster">
+    <div class="mj-pin"></div>
+    <div class="mj-figure">🕴️</div>
+    <div class="mj-title">MJ</div>
+    <div class="mj-sub">king of pop</div>
+  </div>
+
+  <!-- person sitting at table, scrolling tiktok -->
+  <div class="cafe-person">
+    <div class="chair"></div>
+    <div class="hair-long"></div>
+    <div class="head-sil"></div>
+    <div class="body-sil"></div>
+    <div class="earbud"><div class="earbud-cord"></div></div>
+    <div class="arm-up">
+      <div class="arm-shape"></div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="tt-feed">
+            <!-- card 1: MJ -->
+            <div class="tt-card">
+              <div class="tt-emoji">🕺</div>
+              <div class="tt-overlay">
+                <div class="tt-user">@kingofpop</div>
+                <div class="tt-song">♪ billie jean — michael jackson</div>
+                <div class="tt-icons">
+                  <span>♥<br>2.4M</span>
+                  <span>💬<br>89K</span>
+                  <span>↗<br>340K</span>
+                </div>
+                <div class="tt-progress"></div>
+              </div>
+            </div>
+            <!-- card 2: matcha -->
+            <div class="tt-card">
+              <div class="tt-emoji">🍵</div>
+              <div class="tt-overlay">
+                <div class="tt-user">@matchadaily</div>
+                <div class="tt-song">♪ POV: perfect ceremonial grade</div>
+                <div class="tt-icons">
+                  <span>♥<br>892K</span>
+                  <span>💬<br>12K</span>
+                  <span>↗<br>45K</span>
+                </div>
+                <div class="tt-progress"></div>
+              </div>
+            </div>
+            <!-- card 3: bali -->
+            <div class="tt-card">
+              <div class="tt-emoji">🌴</div>
+              <div class="tt-overlay">
+                <div class="tt-user">@balidiaries</div>
+                <div class="tt-song">♪ ubud rice terraces at sunrise</div>
+                <div class="tt-icons">
+                  <span>♥<br>1.1M</span>
+                  <span>💬<br>34K</span>
+                  <span>↗<br>180K</span>
+                </div>
+                <div class="tt-progress"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- fairy lights string -->
+  <div class="fairy-lights">
+    <svg class="fairy-string" viewBox="0 0 740 60" preserveAspectRatio="none">
+      <path d="M 0 5 Q 185 50 370 25 T 740 5" stroke="rgba(0,0,0,0.4)" stroke-width="1" fill="none"/>
+    </svg>
+    <div id="bulbs"></div>
+  </div>
+
+  <div class="table"></div>
+
+  <button class="wish-btn" id="wishBtn">make a wish ✨</button>
+
+  <p class="quote">here's to strong women: may we know them, may we be them, may we raise them</p>
+</div>
+
+<div class="reveal" id="reveal">
+  <div class="reveal-content">
+    <div class="wish-counter" id="wishCounter">wish 1 of 10</div>
+    <h2 id="wishTitle">twenty-three looks good on you</h2>
+    <div id="wishBody"></div>
+    <p class="signoff" id="wishSignoff">happy birthday, faisa</p>
+    <div class="wish-nav">
+      <button class="close" id="nextBtn">next wish →</button>
+      <button class="close" id="closeBtn">close ✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============ PASSWORD GATE ============
+  const gate = document.getElementById('gate');
+  const gateInput = document.getElementById('gateInput');
+  const gateBtn = document.getElementById('gateBtn');
+  const gateError = document.getElementById('gateError');
+
+  // accepts a few variations so spelling doesn't bite us
+  const VALID = ['billie jean', 'billiejean', 'billy jean', 'billyjean'];
+
+  function tryEnter() {
+    const val = gateInput.value.trim().toLowerCase().replace(/\s+/g, ' ');
+    if (VALID.includes(val)) {
+      gate.classList.add('hidden');
+      // remove from DOM after fade so it stops capturing focus
+      setTimeout(() => gate.remove(), 1300);
+    } else {
+      gateInput.classList.add('wrong');
+      gateError.classList.add('show');
+      setTimeout(() => gateInput.classList.remove('wrong'), 500);
+      setTimeout(() => gateError.classList.remove('show'), 2500);
+      gateInput.select();
+    }
+  }
+  gateBtn.addEventListener('click', tryEnter);
+  gateInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') tryEnter();
+  });
+  // focus the input on load
+  setTimeout(() => gateInput.focus(), 100);
+
+  // ============ CONFIG ============
+  // Set her name here (or leave "" to keep the [NAME] placeholder visible).
+  const NAME = "Faisa";
+  if (NAME) document.querySelector('.name').textContent = NAME;
+
+  // ============ RAIN ============
+  const rain = document.getElementById('rain');
+  const RAIN_DROPS = 90;
+  const RAIN_STREAKS = 14;
+
+  for (let i = 0; i < RAIN_DROPS; i++) {
+    const drop = document.createElement('div');
+    drop.className = 'drop';
+    drop.style.left = Math.random() * 100 + '%';
+    drop.style.height = (18 + Math.random() * 45) + 'px';
+    drop.style.animationDuration = (0.4 + Math.random() * 0.7) + 's';
+    drop.style.animationDelay = Math.random() * 2 + 's';
+    drop.style.opacity = 0.3 + Math.random() * 0.5;
+    rain.appendChild(drop);
+  }
+  for (let i = 0; i < RAIN_STREAKS; i++) {
+    const streak = document.createElement('div');
+    streak.className = 'streak';
+    streak.style.left = Math.random() * 100 + '%';
+    streak.style.top = Math.random() * 30 + '%';
+    streak.style.animationDuration = (4 + Math.random() * 5) + 's';
+    streak.style.animationDelay = Math.random() * 5 + 's';
+    rain.appendChild(streak);
+  }
+
+  // ============ DISTANT WINDOWS ============
+  const farLights = document.getElementById('farLights');
+  const windowDots = [
+    [8, 60], [10, 55], [12, 65], [16, 50], [24, 38],
+    [28, 42], [34, 48], [42, 30], [46, 35], [54, 32],
+    [58, 50], [64, 28], [72, 42], [78, 38], [84, 52],
+    [92, 45]
+  ];
+  windowDots.forEach(([x, y], i) => {
+    const w = document.createElement('span');
+    w.style.left = x + '%';
+    w.style.bottom = y + '%';
+    w.style.animationDelay = (i * 0.3) + 's';
+    farLights.appendChild(w);
+  });
+
+  // ============ WISH ============
+  const wishBtn = document.getElementById('wishBtn');
+  const reveal = document.getElementById('reveal');
+  const closeBtn = document.getElementById('closeBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const wishTitle = document.getElementById('wishTitle');
+  const wishBody = document.getElementById('wishBody');
+  const wishSignoff = document.getElementById('wishSignoff');
+  const wishCounter = document.getElementById('wishCounter');
+  const leafSet = ['🍃', '🌿', '🍵', '🌸', '🌱'];
+
+  const WISHES = [
+    {
+      title: "twenty-three looks good on you",
+      lines: [
+        "may this year bring you cafés full of warm rain",
+        "(but no thunder, never thunder)",
+        "cups of matcha that never go cold",
+        "the sound of waves in bali — soon, soon",
+        "and a world that finally listens to women like you",
+      ],
+      signoff: "happy birthday, faisa"
+    },
+    {
+      title: "for the matcha enthusiast 🍵",
+      lines: [
+        "may every whisk be foamy",
+        "every ceremonial grade be worth the price",
+        "and may you never again get served sad, dusty matcha",
+        "only the greenest, most ridiculous shade of jade",
+      ],
+      signoff: "drink up, faisa"
+    },
+    {
+      title: "for the rain lover ☔",
+      lines: [
+        "may the sky open up just when you sit down with your book",
+        "may umbrellas always be optional, never required",
+        "may every window you find have a seat by it",
+        "may petrichor follow you like a small, loyal animal",
+      ],
+      signoff: "let it pour, faisa"
+    },
+    {
+      title: "for the café dweller ☕",
+      lines: [
+        "may you always find the corner table",
+        "the one with the outlet, near the window",
+        "may the playlist always be exactly your taste",
+        "may your laptop battery outlast your attention span",
+        "and may someone, sometime, buy your coffee for no reason",
+      ],
+      signoff: "stay a little longer, faisa"
+    },
+    {
+      title: "for the bali dreamer 🌴",
+      lines: [
+        "this is the year. or the next. but soon.",
+        "may you swim in water so warm it feels like a hug",
+        "may you eat fruit you can't name",
+        "may you watch a sunset that ruins all other sunsets for you",
+        "and may you come back changed, in the best way",
+      ],
+      signoff: "see you in ubud, faisa"
+    },
+    {
+      title: "for the feminist ✊",
+      lines: [
+        "may you take up every inch of space you deserve",
+        "may you interrupt the men who interrupt you",
+        "may you mentor the girls coming up behind you",
+        "and may we keep building the world our mothers couldn't",
+      ],
+      signoff: "in solidarity, always, faisa"
+    },
+    {
+      title: "för dig, från sverige 🇸🇪",
+      lines: [
+        "grattis på födelsedagen, faisa",
+        "may fika never be just a coffee break",
+        "may you always have someone to share the cinnamon bun with",
+        "and may you carry sweden with you, wherever you go",
+      ],
+      signoff: "tjugotre år — wow"
+    },
+    {
+      title: "for the soft moments 🌸",
+      lines: [
+        "may you let yourself rest without guilt",
+        "may you cry at songs that don't even make sense",
+        "may you be tender with yourself the way you are with everyone else",
+        "softness is not weakness. you taught me that.",
+      ],
+      signoff: "be gentle, faisa"
+    },
+    {
+      title: "for the bold ones 🔥",
+      lines: [
+        "may you say the thing in the meeting",
+        "may you ask for the raise, the title, the seat",
+        "may you stop apologizing for things that aren't yours to apologize for",
+        "and may you keep being a little too much for people who can't handle you",
+      ],
+      signoff: "take up space, faisa"
+    },
+    {
+      title: "one more thing 💚",
+      lines: [
+        "you've made the people around you better",
+        "(yes, including me)",
+        "you are a good friend, a sharp mind, a kind heart",
+        "twenty-three is going to be your best year yet",
+        "i promise.",
+      ],
+      signoff: "happy birthday, faisa — see you at the café"
+    },
+  ];
+
+  let wishIndex = -1;
+  let revealOpenedOnce = false;
+
+  function showWish(idx) {
+    const w = WISHES[idx];
+    wishTitle.textContent = w.title;
+    wishSignoff.textContent = w.signoff;
+    wishCounter.textContent = `wish ${idx + 1} of ${WISHES.length}`;
+    wishBody.innerHTML = '';
+    w.lines.forEach((line, i) => {
+      const p = document.createElement('p');
+      p.textContent = line;
+      p.style.animationDelay = (i * 0.15) + 's';
+      wishBody.appendChild(p);
+    });
+    nextBtn.textContent = (idx === WISHES.length - 1) ? 'start over ↻' : 'next wish →';
+  }
+
+  function spawnLeaves() {
+    for (let i = 0; i < 28; i++) {
+      const leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      leaf.textContent = leafSet[Math.floor(Math.random() * leafSet.length)];
+      leaf.style.left = Math.random() * 100 + 'vw';
+      leaf.style.animationDelay = Math.random() * 2 + 's';
+      leaf.style.animationDuration = (4 + Math.random() * 4) + 's';
+      leaf.style.fontSize = (16 + Math.random() * 22) + 'px';
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 9000);
+    }
+  }
+
+  wishBtn.addEventListener('click', () => {
+    spawnLeaves();
+    wishIndex = (wishIndex + 1) % WISHES.length;
+    showWish(wishIndex);
+    const delay = revealOpenedOnce ? 0 : 1100;
+    revealOpenedOnce = true;
+    setTimeout(() => reveal.classList.add('show'), delay);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    wishIndex = (wishIndex + 1) % WISHES.length;
+    showWish(wishIndex);
+    spawnLeaves();
+  });
+
+  closeBtn.addEventListener('click', () => reveal.classList.remove('show'));
+  reveal.addEventListener('click', (e) => {
+    if (e.target === reveal) reveal.classList.remove('show');
+  });
+
+  // postcard wiggle on click
+  document.getElementById('postcard').addEventListener('click', (e) => {
+    e.currentTarget.style.transform = 'rotate(-12deg) scale(1.15) translateY(-8px)';
+    setTimeout(() => { e.currentTarget.style.transform = ''; }, 600);
+  });
+
+  // ============ FAIRY LIGHTS ============
+  // place bulbs along the same quadratic curve as the SVG path
+  const bulbContainer = document.getElementById('bulbs');
+  const bulbColors = ['#ffd89b', '#ffb3c6', '#b8d4ba', '#ffe0a3', '#c8a8e0', '#ffb3c6', '#b8d4ba', '#ffd89b', '#ffe0a3', '#c8a8e0', '#ffb3c6', '#ffd89b', '#b8d4ba'];
+  const BULB_COUNT = bulbColors.length;
+  // approximate the SVG cubic via two quadratics: (0,5)->(370,25) ctrl(185,50), (370,25)->(740,5) ctrl(555,0)
+  function bulbY(t) {
+    // mirror of the path roughly: dip in middle
+    if (t < 0.5) {
+      const u = t * 2;
+      return (1 - u) * (1 - u) * 5 + 2 * (1 - u) * u * 50 + u * u * 25;
+    } else {
+      const u = (t - 0.5) * 2;
+      return (1 - u) * (1 - u) * 25 + 2 * (1 - u) * u * 0 + u * u * 5;
+    }
+  }
+  bulbColors.forEach((color, i) => {
+    const t = i / (BULB_COUNT - 1);
+    const bulb = document.createElement('div');
+    bulb.className = 'bulb';
+    bulb.style.color = color;
+    bulb.style.background = `radial-gradient(circle at 35% 30%, ${color}ff, ${color}aa)`;
+    bulb.style.left = `calc(${t * 100}% - 4px)`;
+    bulb.style.top = `${bulbY(t) - 4}px`;
+    bulb.style.animationDelay = (Math.random() * 4) + 's';
+    bulbContainer.appendChild(bulb);
+  });
+
+  // ============ HEARTS ON CLICK (cup) ============
+  document.querySelector('.cup').addEventListener('click', (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    for (let i = 0; i < 5; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = ['💚', '💗', '🌸', '🍵', '✨'][i];
+      heart.style.left = (rect.left + 30 + Math.random() * 60) + 'px';
+      heart.style.top = (rect.top + 20) + 'px';
+      heart.style.animationDelay = (i * 0.1) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2600);
+    }
+  });
+
+  // ============ MUSIC NOTES from phone ============
+  const noteSymbols = ['♪', '♫', '♬', '♩'];
+  setInterval(() => {
+    const phone = document.querySelector('.phone');
+    if (!phone) return;
+    const note = document.createElement('div');
+    note.className = 'note';
+    note.textContent = noteSymbols[Math.floor(Math.random() * noteSymbols.length)];
+    note.style.right = (-10 + Math.random() * 20) + 'px';
+    note.style.top = (5 + Math.random() * 20) + 'px';
+    note.style.fontSize = (12 + Math.random() * 8) + 'px';
+    note.style.animationDuration = (3 + Math.random() * 2) + 's';
+    phone.appendChild(note);
+    setTimeout(() => note.remove(), 5000);
+  }, 1400);
+
+  // tiny sparkle on matcha periodically
+  setInterval(() => {
+    const matcha = document.querySelector('.matcha');
+    if (!matcha) return;
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = (10 + Math.random() * 70) + 'px';
+    sparkle.style.top = (2 + Math.random() * 14) + 'px';
+    sparkle.style.animationDuration = (1.5 + Math.random()) + 's';
+    matcha.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 2500);
+  }, 1200);
+</script>
+</body>
+</html>
